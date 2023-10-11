@@ -13,7 +13,7 @@ public class AuthenticateCommand : RootCommand
 {
     private readonly ILoggerFactory _loggerFactory;
 
-    public AuthenticateCommand(ILogger<AuthenticateCommand> logger, ILoggerFactory loggerFactory)
+    public AuthenticateCommand(ILoggerFactory loggerFactory)
         : base("Interactively authenticate using OpenID Connect")
     {
         _loggerFactory = loggerFactory;
