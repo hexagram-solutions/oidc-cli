@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32901.215
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{2E9463E5-8227-4529-8AC4-BE1069778C42}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hexagrams.OidcCli.Tool", "src\Tool\Hexagrams.OidcCli.Tool.csproj", "{1C4A00AC-727D-454D-9A74-8C0191648ED5}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "_build", "build\_build.csproj", "{DD2E83B3-1EAA-4628-A9EB-F6FC3ED1AEAA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1C4A00AC-727D-454D-9A74-8C0191648ED5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1C4A00AC-727D-454D-9A74-8C0191648ED5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1C4A00AC-727D-454D-9A74-8C0191648ED5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1C4A00AC-727D-454D-9A74-8C0191648ED5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DD2E83B3-1EAA-4628-A9EB-F6FC3ED1AEAA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DD2E83B3-1EAA-4628-A9EB-F6FC3ED1AEAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{1C4A00AC-727D-454D-9A74-8C0191648ED5} = {2E9463E5-8227-4529-8AC4-BE1069778C42}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {6005A8DC-5BD5-46F1-9229-12D0B55BFC2C}
+	EndGlobalSection
+EndGlobal

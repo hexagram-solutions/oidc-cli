@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Hexagrams.OidcCli.Tool": {
+      "commandName": "Project",
+      "commandLineArgs": ""
+    }
+  }
+}
