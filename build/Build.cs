@@ -1,12 +1,14 @@
 using System.Collections.Generic;
 using System.Linq;
+using Hexagrams.Nuke.Components;
 using Nuke.Common;
 using Nuke.Common.CI;
+using Nuke.Common.IO;
 using Nuke.Common.ProjectModel;
 using Nuke.Common.Tooling;
 using Nuke.Common.Tools.DotNet;
-using Hexagrams.Nuke.Components;
-using Nuke.Common.IO;
+using static Nuke.Common.ControlFlow;
+using static Nuke.Common.Tools.DotNet.DotNetTasks;
 
 // ReSharper disable RedundantExtendsListEntry
 // ReSharper disable InconsistentNaming
@@ -37,17 +39,28 @@ partial class Build : NukeBuild,
 
     public IEnumerable<AbsolutePath> ExcludedFormatPaths => Enumerable.Empty<AbsolutePath>();
 
-    Target ICompile.Compile => _ => _
+    Target ICompile.Compile => t => t
         .Inherit<ICompile>()
         .DependsOn<IFormat>(x => x.VerifyFormat);
 
-    Configure<DotNetPublishSettings> ICompile.PublishSettings => _ => _
-        .When(!ScheduledTargets.Contains(((IPush)this).Push), _ => _
+    Configure<DotNetPublishSettings> ICompile.PublishSettings => t => t
+        .When(!ScheduledTargets.Contains(((IPush)this).Push), s => s
             .ClearProperties());
 
-    Target IPush.Push => _ => _
+    Target IPush.Push => t => t
         .Inherit<IPush>()
         .Consumes(this.FromComponent<IPush>().Pack)
         .Requires(() => this.FromComponent<IHasGitRepository>().GitRepository.Tags.Any())
         .WhenSkipped(DependencyBehavior.Execute);
+
+    Target Install => t => t
+        .Description("Tests tool package installation by building and re-installing the tool locally.")
+        .DependsOn<IPack>()
+        .Executes(() =>
+        {
+            const string packageName = "Hexagrams.OidcCli";
+
+            SuppressErrors(() => DotNet($"tool uninstall {packageName}"));
+            DotNet($"tool install --add-source {this.FromComponent<IPack>().PackagesDirectory} {packageName}");
+        });
 }

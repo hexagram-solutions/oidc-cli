@@ -1,5 +1,5 @@
-using Nuke.Common.CI.GitHubActions;
 using Hexagrams.Nuke.Components;
+using Nuke.Common.CI.GitHubActions;
 
 [GitHubActions(
     "continuous",
@@ -10,7 +10,7 @@ using Hexagrams.Nuke.Components;
     OnPullRequestBranches = new[] { "main" },
     OnPushBranches = new[] { "main", "release/v*" },
     PublishArtifacts = true,
-    InvokedTargets = new[] { nameof(IPack.Pack) },
+    InvokedTargets = new[] { nameof(Install) },
     CacheKeyFiles = new[] { "global.json", "src/**/*.csproj" })]
 [GitHubActions(
     "release",
