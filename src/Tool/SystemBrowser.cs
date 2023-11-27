@@ -13,14 +13,9 @@ namespace Hexagrams.OidcCli.Tool;
 ///     Opens the default system browser for the purposes of performing an OpenID Connect Authorization Code
 ///     exchange. Listens on <c>http://127.0.0.1</c> with the specified port.
 /// </summary>
-public class SystemBrowser : IBrowser
+public class SystemBrowser(int port) : IBrowser
 {
-    public SystemBrowser(int port)
-    {
-        Port = port;
-    }
-
-    public int Port { get; }
+    public int Port { get; } = port;
 
     public async Task<BrowserResult> InvokeAsync(BrowserOptions options, CancellationToken cancellationToken)
     {

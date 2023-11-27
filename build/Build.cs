@@ -37,15 +37,15 @@ partial class Build : NukeBuild,
 
     public IEnumerable<AbsolutePath> ExcludedFormatPaths => Enumerable.Empty<AbsolutePath>();
 
-    Target ICompile.Compile => _ => _
+    Target ICompile.Compile => t => t
         .Inherit<ICompile>()
         .DependsOn<IFormat>(x => x.VerifyFormat);
 
-    Configure<DotNetPublishSettings> ICompile.PublishSettings => _ => _
-        .When(!ScheduledTargets.Contains(((IPush)this).Push), _ => _
+    Configure<DotNetPublishSettings> ICompile.PublishSettings => t => t
+        .When(!ScheduledTargets.Contains(((IPush)this).Push), s => s
             .ClearProperties());
 
-    Target IPush.Push => _ => _
+    Target IPush.Push => t => t
         .Inherit<IPush>()
         .Consumes(this.FromComponent<IPush>().Pack)
         .Requires(() => this.FromComponent<IHasGitRepository>().GitRepository.Tags.Any())
