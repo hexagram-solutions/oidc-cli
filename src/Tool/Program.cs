@@ -1,7 +1,7 @@
 ﻿using System.CommandLine;
+using Hexagrams.OidcCli.Tool;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Hexagrams.OidcCli.Tool;
 
 var serviceProvider = BuildServiceProvider();
 
