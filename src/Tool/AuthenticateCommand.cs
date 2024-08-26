@@ -1,4 +1,4 @@
-﻿using System.CommandLine;
+using System.CommandLine;
 using System.Net;
 using System.Net.Sockets;
 using System.Text.Json;
@@ -71,9 +71,10 @@ public class AuthenticateCommand : RootCommand
         AddOption(diagnosticsOption);
 
         var disableEndpointValidationOption = new Option<bool>(
-            name: "--disableEndpointValidation",
+            name: "--disable-endpoint-validation",
             description: "Disable validation of authorization, token, and userinfo endpoints in the providers OpenID " +
-                         "configuration (optional)",
+                         "configuration (optional). This is useful for certain identity providers that have " +
+                         "endpoints on different hosts than the authority (looking at you, Amazon Cognito).",
             getDefaultValue: () => false);
 
         AddOption(disableEndpointValidationOption);
@@ -108,7 +109,9 @@ public class AuthenticateCommand : RootCommand
                 {
                     "authorization_endpoint",
                     "token_endpoint",
-                    "userinfo_endpoint"
+                    "userinfo_endpoint",
+                    "end_session_endpoint",
+                    "revocation_endpoint"
                 }
             };
         }
@@ -123,7 +126,7 @@ public class AuthenticateCommand : RootCommand
             RedirectUri = $"http://localhost:{port}",
             PostLogoutRedirectUri = $"http://localhost:{port}",
             Scope = scope,
-            Browser = new SystemBrowser(port.Value)
+            Browser = new SystemBrowser(port.Value),
         };
 
         if (diagnostics)
@@ -171,7 +174,7 @@ public class AuthenticateCommand : RootCommand
         var listener = new TcpListener(IPAddress.Loopback, 0);
 
         listener.Start();
-        var port = ((IPEndPoint)listener.LocalEndpoint).Port;
+        var port = ((IPEndPoint) listener.LocalEndpoint).Port;
         listener.Stop();
 
         return port;

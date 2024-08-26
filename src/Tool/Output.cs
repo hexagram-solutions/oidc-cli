@@ -1,4 +1,4 @@
-﻿namespace Hexagrams.OidcCli.Tool;
+namespace Hexagrams.OidcCli.Tool;
 
 internal class Output
 {

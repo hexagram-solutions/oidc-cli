@@ -31,7 +31,7 @@ partial class Build : NukeBuild,
     ///   - Microsoft VisualStudio     https://nuke.build/visualstudio
     ///   - Microsoft VSCode           https://nuke.build/vscode
 
-    public static int Main() => Execute<Build>(x => ((ICompile)x).Compile);
+    public static int Main() => Execute<Build>(x => ((ICompile) x).Compile);
 
     [Solution]
     readonly Solution Solution;
@@ -44,7 +44,7 @@ partial class Build : NukeBuild,
         .DependsOn<IFormat>(x => x.VerifyFormat);
 
     Configure<DotNetPublishSettings> ICompile.PublishSettings => t => t
-        .When(!ScheduledTargets.Contains(((IPush)this).Push), s => s
+        .When(!ScheduledTargets.Contains(((IPush) this).Push), s => s
             .ClearProperties());
 
     Target IPush.Push => t => t
