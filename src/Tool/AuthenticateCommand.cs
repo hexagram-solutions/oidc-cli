@@ -13,8 +13,15 @@ public class AuthenticateCommand : RootCommand
 {
     private readonly ILoggerFactory _loggerFactory;
 
+    private static readonly JsonSerializerOptions JsonOptions = new()
+    {
+        WriteIndented = true,
+        DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
+        PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+    };
+
     public AuthenticateCommand(ILoggerFactory loggerFactory)
-        : base("Interactively authenticate using OpenID Connect")
+            : base("Interactively authenticate using OpenID Connect")
     {
         _loggerFactory = loggerFactory;
 
@@ -105,14 +112,14 @@ public class AuthenticateCommand : RootCommand
         {
             policy.Discovery = new DiscoveryPolicy
             {
-                EndpointValidationExcludeList = new List<string>
-                {
+                EndpointValidationExcludeList =
+                [
                     "authorization_endpoint",
                     "token_endpoint",
                     "userinfo_endpoint",
                     "end_session_endpoint",
                     "revocation_endpoint"
-                }
+                ]
             };
         }
 
@@ -146,13 +153,6 @@ public class AuthenticateCommand : RootCommand
 
         var result = await oidcClient.LoginAsync(loginRequest, cancellationToken);
 
-        var jsonOptions = new JsonSerializerOptions
-        {
-            WriteIndented = true,
-            DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
-            PropertyNamingPolicy = JsonNamingPolicy.CamelCase
-        };
-
         if (result.IsError)
             return;
 
@@ -166,7 +166,7 @@ public class AuthenticateCommand : RootCommand
         };
 
         // We specifically use Console.WriteLine instead of a logger here to make the command output easier to parse.
-        Console.WriteLine(JsonSerializer.Serialize(output, jsonOptions));
+        Console.WriteLine(JsonSerializer.Serialize(output, JsonOptions));
     }
 
     private static int GetRandomUnusedPort()
