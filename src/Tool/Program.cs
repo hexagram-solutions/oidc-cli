@@ -1,4 +1,4 @@
-﻿using System.CommandLine;
+using System.CommandLine;
 using Hexagrams.OidcCli.Tool;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
