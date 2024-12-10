@@ -37,7 +37,7 @@ partial class Build : NukeBuild,
     readonly Solution Solution;
     Solution IHasSolution.Solution => Solution;
 
-    public IEnumerable<AbsolutePath> ExcludedFormatPaths => Enumerable.Empty<AbsolutePath>();
+    public IEnumerable<AbsolutePath> ExcludedFormatPaths => [];
 
     Target ICompile.Compile => t => t
         .Inherit<ICompile>()

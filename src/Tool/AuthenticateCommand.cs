@@ -99,14 +99,12 @@ public class AuthenticateCommand : RootCommand
     }
 
     private async Task AuthenticateAsync(string authority, string clientId, string scope, int? port = null,
-        string? audience = null, bool diagnostics = false, bool disableEndpointValidation = false, CancellationToken cancellationToken = default)
+        string? audience = null, bool diagnostics = false, bool disableEndpointValidation = false,
+        CancellationToken cancellationToken = default)
     {
         port ??= GetRandomUnusedPort();
 
-        var policy = new Policy
-        {
-            RequireAccessTokenHash = false
-        };
+        var policy = new Policy { RequireIdentityTokenSignature = false };
 
         if (disableEndpointValidation)
         {
@@ -128,11 +126,11 @@ public class AuthenticateCommand : RootCommand
             Policy = policy,
             Authority = authority,
             ClientId = clientId,
-            FilterClaims = false,
-            LoadProfile = true,
+            LoadProfile = false,
             RedirectUri = $"http://localhost:{port}",
             PostLogoutRedirectUri = $"http://localhost:{port}",
             Scope = scope,
+            DisablePushedAuthorization = true,
             Browser = new SystemBrowser(port.Value),
         };
 
